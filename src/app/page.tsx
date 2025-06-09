@@ -1,103 +1,72 @@
-import Image from "next/image";
+"use client";
+import { FormEvent, useState } from "react";
+import { makeCall } from "./server/actions";
 
 export default function Home() {
+  const [phone, setPhone] = useState("");
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (phone.length > 8) {
+      const res = await makeCall(phone);
+      if (res.success) {
+        var t1 = document.getElementById("form")
+        var t2 = document.getElementById("initiated")
+        t1?.classList.replace("flex", "hidden")
+        t2?.classList.replace("hidden", "flex")
+      }
+    } else {
+      alert("invalid number");
+    }
+  };
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+    <div className="grid grid-rows-3 items-center bg-gradient-to-br from-slate-100 to-blue-100 h-[100vh]">
+      <div className="items-center flex flex-col text-slate-900">
+        <img
+          className="size-14 rounded-lg shadow-xl"
+          src="https://acdn.inaiways.com/filters:format(webp)/filters:quality(100)/filters:proportion(1)/www.inaiways.com/inaiways-logoo.png"
+          alt="Inaiways_logo"
         />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        <hr className="border-slate-900 mt-4 w-2xs" />
+        <h1 className="poppins-bold text-3xl mt-4 mb-2">Inaiways Technology</h1>
+        <p className="poppins-normal text-sm">
+          Experience the future of AI conversation
+        </p>
+      </div>
+      <div className="items-center flex mx-auto">
+        <form
+          id="form"
+          className="flex items-center shadow-xl border border-slate-100 bg-white px-8 py-4 rounded-xl space-x-3"
+          onSubmit={handleSubmit}
+        >
+          <input
+            className="poppins-normal px-3 py-2 border border-slate-200 rounded-lg w-sm text-slate-400"
+            type="tel"
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="Enter your number, e.g. 9190XXXXXXXX"
+          />
+          <input
+            className="poppins-semibold bg-blue-600 px-6 py-2 text-sm text-white rounded-lg hover:scale-105 duration-300 hover:bg-blue-400 "
+            type="submit"
+            value="Get a call"
+          />
+        </form>
+        <div
+          id="initiated"
+          className="flex-col items-center shadow-xl border border-slate-100 bg-white px-8 hidden py-4 rounded-xl space-x-3"
+        >
+          <h1 className="poppins-semibold text-slate-900 text-3xl">
+            Call initiated successfully!
+          </h1>
+          <p className="text-slate-500 text-xs">
+            You will recieve a call shortly
+          </p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
+      <div className=" mt-auto mx-auto p-8 text-slate-500">
+        <h2 className="poppins-normal text-sm">
+          © 2025 Inaiways Technology. All rights reserved
+        </h2>
+      </div>
     </div>
   );
 }
