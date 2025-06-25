@@ -5,10 +5,6 @@ async function writeLog(message: string) {
   const logFileName = "app.log";
   const logFilePath = path.join(process.cwd(), "logs", logFileName);
   console.log(logFilePath);
-  const logDir = path.dirname(logFilePath);
-  if (!fs.existsSync(logDir)) {
-    fs.mkdirSync(logDir, { recursive: true });
-  }
 
   const timestamp = new Date().toISOString();
   const logEntry = `${timestamp} : ${message}\n`;
