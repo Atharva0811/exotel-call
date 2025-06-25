@@ -8,7 +8,7 @@ if (!MONGODB_URI) {
 
 async function connectToDatabase() {
   console.log("Attempting to connect to database...");
-  console.log("MONGODB_URI:", MONGODB_URI); // <-- Add this line
+  console.log("MONGODB_URI:", MONGODB_URI);
   try {
     const conn = await mongoose.connect(MONGODB_URI, {
       bufferCommands: false,
