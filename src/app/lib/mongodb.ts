@@ -20,7 +20,8 @@ async function connectToDatabase() {
       bufferCommands: false,
     });
   }
-
+  console.log("connecting to database");
+  
   cached.conn = await cached.promise;
   return cached.conn;
 }

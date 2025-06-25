@@ -5,8 +5,14 @@ import connectToDatabase from "../lib/mongodb";
 
 async function writeLog(message: string) {
   try {
+    console.log("enter write log");
+    
     await connectToDatabase();
+    console.log("exit write log enter create");
+    
     const res = await Log.create({ message });
+    console.log("exit ");
+    
     console.log(res);
     
   } catch (e) {
