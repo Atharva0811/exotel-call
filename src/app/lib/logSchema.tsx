@@ -8,6 +8,5 @@ const topicSchema = new Schema(
     timestamps: true,
   }
 );
-const Log =
-  mongoose.models.log || mongoose.model("log", topicSchema);
+const Log = mongoose.models.log || mongoose.model("log", topicSchema);
 export default Log;
