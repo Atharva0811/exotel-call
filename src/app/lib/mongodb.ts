@@ -9,9 +9,7 @@ async function connectToDatabase() {
   console.log("Attempting to connect to database...");
   console.log("MONGODB_URI:", MONGODB_URI);
   try {
-    const conn = await mongoose.connect(MONGODB_URI, {
-      bufferCommands: false,
-    });
+    const conn = await mongoose.connect(MONGODB_URI);
     console.log("Successfully connected to database!");
     return conn;
   } catch (error) {
