@@ -6,26 +6,19 @@ if (!MONGODB_URI) {
   throw new Error("Please define the MONGODB_URI in .env.local");
 }
 
-let cached = (global as any).mongoose;
-
-if (!cached) {
-  cached = (global as any).mongoose = { conn: null, promise: null };
-}
-
 async function connectToDatabase() {
-  if (cached.conn) return cached.conn;
-
-  if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGODB_URI, {
-      bufferCommands: false,
+  console.log("Attempting to connect to database...");
+  try {
+    const conn = await mongoose.connect(MONGODB_URI, {
+      bufferCommands: false, // Ensures commands are not buffered if connection is lost
     });
+    console.log("Successfully connected to database!");
+    return conn;
+  } catch (error) {
+    console.error("Database connection error:", error);
+    // You might want to re-throw the error or handle it more gracefully
+    throw error;
   }
-  console.log("connecting to database");
-  
-  cached.conn = await cached.promise;
-  console.log("cache returning");
-  
-  return cached.conn;
 }
 
 export default connectToDatabase;
