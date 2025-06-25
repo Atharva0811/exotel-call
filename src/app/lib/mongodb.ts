@@ -23,6 +23,8 @@ async function connectToDatabase() {
   console.log("connecting to database");
   
   cached.conn = await cached.promise;
+  console.log("cache returning");
+  
   return cached.conn;
 }
 
