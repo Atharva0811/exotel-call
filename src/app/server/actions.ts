@@ -58,7 +58,6 @@ export async function makeCall(phoneNumberToCall: any) {
     if (response.ok) {
       writeLog(responseBody);
       console.log("written response");
-      
       return {
         success: true,
         message: "Call initiated successfully!",
