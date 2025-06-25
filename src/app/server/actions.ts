@@ -1,18 +1,16 @@
 "use server";
-import fs from "fs";
-import path from "path";
+
+import Log from "../lib/logSchema";
+import connectToDatabase from "../lib/mongodb";
+
 async function writeLog(message: string) {
-  const logFileName = "app.log";
-  const logFilePath = path.join(process.cwd(), "logs", logFileName);
-  console.log(logFilePath);
-
-  const timestamp = new Date().toISOString();
-  const logEntry = `${timestamp} : ${message}\n`;
-
   try {
-    await fs.promises.appendFile(logFilePath, logEntry);
-  } catch (error) {
-    console.error("Failed to write log:", error);
+    await connectToDatabase();
+    const res = await Log.create({ message });
+    console.log(res);
+    
+  } catch (e) {
+    console.error("Error",e);
   }
 }
 
@@ -57,9 +55,7 @@ export async function makeCall(phoneNumberToCall: any) {
   try {
     const response = await fetch(exotelApiUrl, requestOptions);
     const responseBody = await response.text();
-
     if (response.ok) {
-      console.log("Exotel API Success:", responseBody);
       writeLog(responseBody);
       return {
         success: true,
