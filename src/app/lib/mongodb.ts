@@ -5,7 +5,6 @@ const MONGODB_URI = process.env.MONGODB_URI!;
 if (!MONGODB_URI) {
   throw new Error("Please define the MONGODB_URI in .env.local");
 }
-
 async function connectToDatabase() {
   console.log("Attempting to connect to database...");
   console.log("MONGODB_URI:", MONGODB_URI);
